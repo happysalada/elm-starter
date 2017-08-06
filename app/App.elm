@@ -1,7 +1,5 @@
 module App exposing (main)
 
-import Routing
-import Messages exposing (Message(..))
 import Navigation exposing (Location)
 import Models exposing (..)
 import Update exposing (update)
@@ -12,7 +10,7 @@ init : Location -> ( Model, Cmd Message )
 init location =
     let
         currentRoute =
-            Routing.parseLocation location
+            Update.parseLocation location
 
         initModel =
             initialModel currentRoute
@@ -35,7 +33,7 @@ subscriptions model =
 
 main : Program Never Model Message
 main =
-    Navigation.program Messages.OnLocationChange
+    Navigation.program Models.OnLocationChange
         { init = init
         , view = view
         , update = update

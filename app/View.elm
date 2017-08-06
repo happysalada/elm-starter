@@ -2,21 +2,13 @@ module View exposing (view)
 
 import Html exposing (Html, button, div, h1, span, text)
 import Html.Attributes exposing (class, style, id, attribute)
-import Html.Events exposing (keyCode)
-import Models exposing (Model)
-import Messages exposing (Message(..))
-import Update
-import RemoteData exposing (WebData)
-import Json.Decode as Json
+import Models exposing (Model, Message(..))
 import Color
 import Element exposing (root, text, html, column, nav, row, el, header, section, Element)
 import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle)
 import Style exposing (style, StyleSheet, paddingHint, hover)
-import Style.Border as Border
-import Style.Shadow as Shadow
 import Style.Color as Color
 import Style.Font as Font exposing (typeface, lineHeight, size)
-import Style.Transition as Transition exposing (all)
 
 
 type Styles

@@ -1,11 +1,8 @@
 module Update exposing (..)
 
-import Models exposing (Model)
-import Navigation
-import Messages exposing (Message(..))
-import Routing exposing (parseLocation)
-import Dom
-import Task
+import Models exposing (Model, Message(..), Route(..))
+import UrlParser exposing (..)
+import Navigation exposing (Location)
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -26,3 +23,21 @@ update msg model =
 
         NoOp ->
             model ! []
+
+
+parseLocation : Location -> Route
+parseLocation location =
+    case parseHash matchers location of
+        Just route ->
+            route
+
+        Nothing ->
+            NotFoundRoute
+
+
+matchers : Parser (Route -> a) a
+matchers =
+    oneOf
+        [ map MainPage top
+        , map AboutPage (s "about")
+        ]
