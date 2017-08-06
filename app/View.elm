@@ -5,7 +5,7 @@ import Html.Attributes exposing (class, style, id, attribute)
 import Models exposing (Model, Message(..))
 import Color
 import Element exposing (root, text, html, column, nav, row, el, header, section, Element)
-import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle)
+import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY)
 import Style exposing (style, StyleSheet, paddingHint, hover)
 import Style.Color as Color
 import Style.Font as Font exposing (typeface, lineHeight, size)
@@ -48,8 +48,7 @@ stylesheet =
             , Color.text Color.white
             ]
         , Style.style Hero
-            [ Font.center
-            , Font.typeface [ "helvetica", "arial", "sans-serif" ]
+            [ Font.typeface [ "helvetica", "arial", "sans-serif" ]
             , Color.background mainColors.indigo
             , Color.text Color.white
             ]
@@ -63,12 +62,6 @@ stylesheet =
 
 view : Model -> Html Message
 view model =
-    div []
-        [ page model ]
-
-
-page : Model -> Html Message
-page model =
     case model.route of
         Models.MainPage ->
             mainPage model
@@ -82,7 +75,7 @@ page model =
 
 mainPage : Model -> Html Message
 mainPage model =
-    Element.root stylesheet <|
+    Element.viewport stylesheet <|
         column MainPage
             []
             [ nav <|
@@ -91,13 +84,13 @@ mainPage model =
                     [ el Logo [] (Element.text "Git Back") ]
             , header <|
                 column Hero
-                    [ verticalCenter, height (px 200), spacing 16 ]
+                    [ verticalCenter, center, height (px 200), spacingXY 0 16 ]
                     [ el Title [] (Element.text "Contribute to open source")
                     , el Subtitle [] (Element.text "Help out on unassigned open issues")
                     ]
             , section <|
                 column None
-                    [ center, width (fill 1) ]
+                    [ center ]
                     [ el None
                         [ padding 16 ]
                         (Element.text "Starter")
