@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns="https://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elm Starter - a starter project template for elm</title>
+  <meta name="description" content="a starter project template for elm with hot-reloading, all the SEO goodies, advanced google analytics setup out of the box..." />
+  <meta name="author" content="Raphael Megzari" />
+  <meta name="robots" content="index, follow">
+  <link rel="manifest" href="assets/manifest.json">
+  <meta name="theme-color" content="#3F51B5">
+  <link rel="icon" sizes="192x192" href="assets/favicon.ico">
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://git-back.com",
+      "name": "a starter project for elm"
+    }
+  </script>
+  <meta property="og:title" content="Elm Starter - a starter project template for elm"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://git-back.com"/>
+  <meta property="og:image" content="assets/launcher_icon_3x.png"/>
+  <meta property="og:site_name" content="Elm Starter"/>
+  <meta property="og:description" content="a starter project template for elm with hot-reloading, all the SEO goodies, advanced google analytics setup out of the box..."/>
+  <!-- script to track errors on the page-->
+  <script>addEventListener('error', window.__e=function f(e){f.q=f.q||[];f.q.push(e)});</script>
+  <script src="js/elm.js"></script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <script async src="js/analyticsBase.js"></script>
+  <script async>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(function() { console.log("Service Worker Registered"); });
+    }
+  </script>
+</head>
+
+<body>
+  <noscript><p>As ludicrous as it will seem in this day and age, you will need javascript to run this page since it's built with Elm.<br>
+     As soon as Elm server side rendering is implemented it won't be the case anymore.<br>
+     Please wait...</p>
+  </noscript>
+  <script> Elm.App.fullscreen() </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+{
+  "name": "git-involved.elm",
+  "description": "Github issue filtering for OSS written in Elm",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Justin Kovalchuk",
+  "homepage": "https://github.com/lamogura/git-involved.elm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lamogura/git-involved.elm"
+  },
+  "engines": {
+    "node": "latest",
+    "yarn": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/lamogura/git-involved.elm/issues"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015",
+            "stage-2"
+          ],
+          "plugins": [
+            [
+              "add-module-exports"
+            ],
+            [
+              "transform-async-to-generator"
+            ],
+            [
+              "transform-es2015-modules-commonjs"
+            ],
+            [
+              "transform-inline-environment-variables"
+            ],
+            [
+              "transform-object-rest-spread",
+              {
+                "useBuiltIns": true
+              }
+            ]
+          ]
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "lint": "elm-analyse -s",
+    "dev": "elm-live app/App.elm --output=frontend/js/elm.js --pushstate --open --debug --dir=frontend",
+    "dev:public": "browser-sync start --config 'bs-config.js'",
+    "prebuild": "rimraf public/*",
+    "build": "yarn build:elm && yarn build:assets && yarn build:images && yarn build:js && yarn build:html && yarn build:mark && yarn update-cache-policy",
+    "build:elm": "elm make app/App.elm --output=frontend/js/elm.js",
+    "build:assets": "mkdir public/styles && mkdir public/js && mkdir public/assets && cp frontend/assets/favicon.ico public/assets/favicon.ico && cp frontend/assets/manifest.json public/assets/manifest.json && cp frontend/robots.txt public/robots.txt && cp frontend/sitemap.xml public/sitemap.xml",
+    "build:images": "imagemin frontend/assets/*.png --out-dir=public/assets && imagemin frontend/assets/res/mipmap-mdpi/*.png --out-dir=public/assets/res/mipmap-mdpi/ && imagemin frontend/assets/res/mipmap-hdpi/*.png --out-dir=public/assets/res/mipmap-hdpi/ && imagemin frontend/assets/res/mipmap-xhdpi/*.png --out-dir=public/assets/res/mipmap-xhdpi/ && imagemin frontend/assets/res/mipmap-xxhdpi/*.png --out-dir=public/assets/res/mipmap-xxhdpi/ && imagemin frontend/assets/res/mipmap-xxhdpi/*.png --out-dir=public/assets/res/mipmap-xxxhdpi/",
+    "build:js": "uglifyjs frontend/js/elm.js -c -o public/js/elm.js && browserify -d frontend/js/analyticsBase.js -p [minifyify --map public/js/analytics.js.map --output public/js/analytics.js.map --uglify [ --compress ] ] > public/js/analyticsBase.js",
+    "build:html": "cp frontend/index.html public/initial.html && htmlprocessor public/initial.html -o public/processed.html && html-minifier --config-file htmlMinifier.conf --output public/temp.html public/processed.html",
+    "build:mark": "hashmark -s -c public -r -l 6 -m assets.json '{js,styles,assets}/*.{css,js,json}' '{dir}/{name}-{hash}{ext}' && awk 'BEGIN { FS = \"\\\"\" } ;FNR==NR { array[$2]=$4; next } { for (i in array) gsub(i,array[i])}1' public/assets.json public/temp.html > public/index.html",
+    "update-cache-policy": "replace-in-file /elm.+js/ `ls public/js/elm* | grep -Eo 'elm.+'` firebase.json --isRegex",
+    "postbuild": "rimraf public/temp.html && rimraf public/assets.json && rimraf public/processed.html && rimraf public/initial.html && sw-precache --root=public --config=sw-precache-config.js --verbose",
+    "deploy:hosting": "firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "autotrack": "^2.4.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.24.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.1.1",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.12",
+    "browserify": "^14.4.0",
+    "clean-css-cli": "^4.1.4",
+    "elm": "^0.18.0",
+    "elm-analyse": "^0.9.3",
+    "elm-test": "^0.18.6",
+    "hashmark": "5.0.0",
+    "html-minifier": "^3.5.2",
+    "htmlprocessor": "^0.2.4",
+    "imagemin-cli": "^3.0.0",
+    "minifyify": "^7.3.5",
+    "nodemon": "^1.11.0",
+    "replace-in-file": "^2.5.3",
+    "rimraf": "^2.6.1",
+    "sw-precache": "^5.2.0",
+    "uglify-js": "^3.0.15"
+  }
+}

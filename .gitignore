@@ -1,0 +1,8 @@
+# npm stuff
+node_modules
+# elm-package generated files
+elm-stuff
+# elm-repl generated files
+repl-temp-*
+.idea
+.runtimeconfig.json
