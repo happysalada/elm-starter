@@ -39,7 +39,7 @@ stylesheet =
             , Font.lineHeight 1.3
             ]
         , Style.style Nav
-            [ paddingHint 10
+            [ paddingHint 12
             , Font.typeface [ "helvetica", "arial", "sans-serif" ]
             , Color.background mainColors.darkIndigo
             ]

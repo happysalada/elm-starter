@@ -20025,7 +20025,7 @@ var _moarwick$elm_webpack_starter$View$stylesheet = _mdgriffith$style_elements$S
 					_moarwick$elm_webpack_starter$View$Nav,
 					{
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Style$paddingHint(10),
+						_0: _mdgriffith$style_elements$Style$paddingHint(12),
 						_1: {
 							ctor: '::',
 							_0: _mdgriffith$style_elements$Style_Font$typeface(
