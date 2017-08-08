@@ -4,6 +4,7 @@ import Navigation exposing (Location)
 import Models exposing (..)
 import Update exposing (update)
 import View exposing (view)
+import Window exposing (resizes)
 
 
 init : Location -> ( Model, Cmd Message )
@@ -24,7 +25,7 @@ init location =
 
 subscriptions : Model -> Sub Message
 subscriptions model =
-    Sub.none
+    Window.resizes (\size -> Resize size)
 
 
 

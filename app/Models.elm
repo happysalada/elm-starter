@@ -1,23 +1,50 @@
 module Models exposing (..)
 
 import Navigation exposing (Location)
+import Window exposing (Size)
 
 
 type Message
     = OnLocationChange Location
     | GoToAboutPage
     | GoToMainPage
+    | Resize Size
     | NoOp
 
 
 initialModel : Route -> Model
 initialModel route =
     { route = route
+    , device = initialDevice
+    }
+
+
+initialDevice : Device
+initialDevice =
+    { width = 1200
+    , height = 800
+    , phone = False
+    , tablet = False
+    , desktop = True
+    , bigDesktop = False
+    , portrait = False
     }
 
 
 type alias Model =
     { route : Route
+    , device : Device
+    }
+
+
+type alias Device =
+    { width : Int
+    , height : Int
+    , phone : Bool
+    , tablet : Bool
+    , desktop : Bool
+    , bigDesktop : Bool
+    , portrait : Bool
     }
 
 

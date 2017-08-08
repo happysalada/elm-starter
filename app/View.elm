@@ -7,6 +7,7 @@ import Color
 import Element exposing (root, text, html, column, nav, row, el, header, section, Element)
 import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY)
 import Style exposing (style, StyleSheet, paddingHint, hover)
+import Style.Scale as Scale
 import Style.Color as Color
 import Style.Font as Font exposing (typeface, lineHeight, size)
 
@@ -28,6 +29,10 @@ mainColors =
     }
 
 
+emScale =
+    Scale.modular 16 1.618
+
+
 stylesheet : StyleSheet Styles variation
 stylesheet =
     Style.stylesheet
@@ -35,7 +40,7 @@ stylesheet =
         , Style.style MainPage
             [ Color.text Color.darkCharcoal
             , Font.typeface [ "helvetica", "arial", "sans-serif" ]
-            , Font.size 16
+            , Font.size (emScale 1)
             , Font.lineHeight 1.3
             ]
         , Style.style Nav
@@ -44,7 +49,7 @@ stylesheet =
             , Color.background mainColors.darkIndigo
             ]
         , Style.style Logo
-            [ Font.size 20
+            [ Font.size (emScale 2)
             , Color.text Color.white
             ]
         , Style.style Hero
@@ -53,7 +58,7 @@ stylesheet =
             , Color.text Color.white
             ]
         , Style.style Title
-            [ Font.size 40
+            [ Font.size (emScale 3)
             ]
         , Style.style Subtitle
             []
@@ -81,12 +86,12 @@ mainPage model =
             [ nav <|
                 row Nav
                     []
-                    [ el Logo [] (Element.text "Git Back") ]
+                    [ el Logo [] (Element.text "Elm Starter") ]
             , header <|
                 column Hero
                     [ verticalCenter, center, height (px 200), spacingXY 0 16 ]
-                    [ el Title [] (Element.text "Contribute to open source")
-                    , el Subtitle [] (Element.text "Help out on unassigned open issues")
+                    [ el Title [] (Element.text "Quick start with Elm")
+                    , el Subtitle [] (Element.text "service workers, google analytics, style elements, firebase functions, and more!")
                     ]
             , section <|
                 column None

@@ -3,11 +3,15 @@ module Update exposing (..)
 import Models exposing (Model, Message(..), Route(..))
 import UrlParser exposing (..)
 import Navigation exposing (Location)
+import Element exposing (classifyDevice)
 
 
 update : Message -> Model -> ( Model, Cmd Message )
 update msg model =
     case msg of
+        Resize size ->
+            { model | device = classifyDevice size } ! []
+
         OnLocationChange location ->
             let
                 newRoute =

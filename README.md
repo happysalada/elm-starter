@@ -11,7 +11,7 @@ starter project for elm, includes
 - `yarn deploy:hosting` will deploy to firebase hosting (you need the firebase cli)
 ## elm style elements
 ### what is it?
-Elm style elements is a library for safe styling with elm. The purpose it wants to achieve is no more styling bugs for more information check out the [docs](http://package.elm-lang.org/packages/mdgriffith/style-elements/3.3.0/Style-Scale)
+Elm style elements is a library for safe styling with elm. The purpose it wants to achieve is no more styling bugs for more information check out the [docs](http://package.elm-lang.org/packages/mdgriffith/style-elements/3.3.0)
 ### Why this might be interesting to you
 I had struggled to find examples for responsive design. Hopefully this repo should help in that regard. Check out View.elm to see how it is integrated
 ## firebase functions
