@@ -63,7 +63,9 @@
     "build:mark": "hashmark -s -c public -r -l 6 -m assets.json '{js,styles,assets}/*.{css,js,json}' '{dir}/{name}-{hash}{ext}' && awk 'BEGIN { FS = \"\\\"\" } ;FNR==NR { array[$2]=$4; next } { for (i in array) gsub(i,array[i])}1' public/assets.json public/temp.html > public/index.html",
     "update-cache-policy": "replace-in-file /elm.+js/ `ls public/js/elm* | grep -Eo 'elm.+'` firebase.json --isRegex",
     "postbuild": "rimraf public/temp.html && rimraf public/assets.json && rimraf public/processed.html && rimraf public/initial.html && sw-precache --root=public --config=sw-precache-config.js --verbose",
-    "deploy:hosting": "firebase deploy --only hosting"
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "autotrack": "^2.4.1",
