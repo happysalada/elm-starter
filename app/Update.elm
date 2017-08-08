@@ -9,8 +9,8 @@ import Element exposing (classifyDevice)
 update : Message -> Model -> ( Model, Cmd Message )
 update msg model =
     case msg of
-        Resize size ->
-            { model | device = classifyDevice size } ! []
+        Resize windowSize ->
+            { model | device = classifyDevice windowSize } ! []
 
         OnLocationChange location ->
             let

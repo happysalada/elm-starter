@@ -7,7 +7,6 @@ import Color
 import Element exposing (root, text, html, column, nav, row, el, header, section, Element)
 import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY)
 import Style exposing (style, StyleSheet, paddingHint, hover)
-import Style.Scale as Scale
 import Style.Color as Color
 import Style.Font as Font exposing (typeface, lineHeight, size)
 
@@ -29,10 +28,6 @@ mainColors =
     }
 
 
-emScale =
-    Scale.modular 16 1.618
-
-
 stylesheet : StyleSheet Styles variation
 stylesheet =
     Style.stylesheet
@@ -40,7 +35,7 @@ stylesheet =
         , Style.style MainPage
             [ Color.text Color.darkCharcoal
             , Font.typeface [ "helvetica", "arial", "sans-serif" ]
-            , Font.size (emScale 1)
+            , Font.size 16
             , Font.lineHeight 1.3
             ]
         , Style.style Nav
@@ -49,7 +44,7 @@ stylesheet =
             , Color.background mainColors.darkIndigo
             ]
         , Style.style Logo
-            [ Font.size (emScale 2)
+            [ Font.size 20
             , Color.text Color.white
             ]
         , Style.style Hero
@@ -58,7 +53,7 @@ stylesheet =
             , Color.text Color.white
             ]
         , Style.style Title
-            [ Font.size (emScale 3)
+            [ Font.size 42
             ]
         , Style.style Subtitle
             []
