@@ -19735,6 +19735,99 @@ var _mdgriffith$style_elements$Element$Option = F3(
 	});
 var _mdgriffith$style_elements$Element$option = _mdgriffith$style_elements$Element$Option;
 
+var _mdgriffith$style_elements$Style_Border$roundBottomLeft = function (x) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-bottom-left-radius',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(x),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$roundBottomRight = function (x) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-bottom-right-radius',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(x),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$roundTopRight = function (x) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-top-right-radius',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(x),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$roundTopLeft = function (x) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-top-left-radius',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(x),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$rounded = function (box) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-radius',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(box),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$dotted = A2(_mdgriffith$style_elements$Style_Internal_Model$Exact, 'border-style', 'dotted');
+var _mdgriffith$style_elements$Style_Border$dashed = A2(_mdgriffith$style_elements$Style_Internal_Model$Exact, 'border-style', 'dashed');
+var _mdgriffith$style_elements$Style_Border$solid = A2(_mdgriffith$style_elements$Style_Internal_Model$Exact, 'border-style', 'solid');
+var _mdgriffith$style_elements$Style_Border$none = A2(_mdgriffith$style_elements$Style_Internal_Model$Exact, 'border-width', '0');
+var _mdgriffith$style_elements$Style_Border$bottom = function (l) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-bottom-width',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(l),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$top = function (l) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-top-width',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(l),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$right = function (l) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-right-width',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(l),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$left = function (l) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-left-width',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(l),
+			'px'));
+};
+var _mdgriffith$style_elements$Style_Border$all = function (v) {
+	return A2(
+		_mdgriffith$style_elements$Style_Internal_Model$Exact,
+		'border-width',
+		_mdgriffith$style_elements$Style_Internal_Render_Value$box(
+			{ctor: '_Tuple4', _0: v, _1: v, _2: v, _3: v}));
+};
+
 var _mdgriffith$style_elements$Style_Color$placeholder = function (clr) {
 	return A2(
 		_mdgriffith$style_elements$Style_Internal_Model$PseudoElement,
@@ -19841,6 +19934,158 @@ var _mdgriffith$style_elements$Style_Font$typeface = function (families) {
 		'font-family',
 		_mdgriffith$style_elements$Style_Internal_Render_Value$typeface(families));
 };
+
+var _mdgriffith$style_elements$Style_Shadow$drop = function (_p0) {
+	var _p1 = _p0;
+	return _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+		{kind: 'drop', offset: _p1.offset, size: 0, blur: _p1.blur, color: _p1.color});
+};
+var _mdgriffith$style_elements$Style_Shadow$text = function (_p2) {
+	var _p3 = _p2;
+	return _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+		{kind: 'text', offset: _p3.offset, size: 0, blur: _p3.blur, color: _p3.color});
+};
+var _mdgriffith$style_elements$Style_Shadow$inset = function (_p4) {
+	var _p5 = _p4;
+	return _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+		{kind: 'inset', offset: _p5.offset, size: _p5.size, blur: _p5.blur, color: _p5.color});
+};
+var _mdgriffith$style_elements$Style_Shadow$box = function (_p6) {
+	var _p7 = _p6;
+	return _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+		{kind: 'box', offset: _p7.offset, size: _p7.size, blur: _p7.blur, color: _p7.color});
+};
+var _mdgriffith$style_elements$Style_Shadow$deep = _mdgriffith$style_elements$Style$shadows(
+	{
+		ctor: '::',
+		_0: _mdgriffith$style_elements$Style_Shadow$box(
+			{
+				color: A4(_elm_lang$core$Color$rgba, 0, 0, 0, 0.2),
+				offset: {ctor: '_Tuple2', _0: 0, _1: 14},
+				blur: 20,
+				size: -12
+			}),
+		_1: {ctor: '[]'}
+	});
+var _mdgriffith$style_elements$Style_Shadow$simple = _mdgriffith$style_elements$Style$shadows(
+	{
+		ctor: '::',
+		_0: _mdgriffith$style_elements$Style_Shadow$box(
+			{
+				color: A4(_elm_lang$core$Color$rgba, 0, 0, 0, 0.5),
+				offset: {ctor: '_Tuple2', _0: 0, _1: 29},
+				blur: 32,
+				size: -20
+			}),
+		_1: {
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Shadow$box(
+				{
+					color: A4(_elm_lang$core$Color$rgba, 0, 0, 0, 0.25),
+					offset: {ctor: '_Tuple2', _0: 0, _1: 4},
+					blur: 11,
+					size: -3
+				}),
+			_1: {ctor: '[]'}
+		}
+	});
+var _mdgriffith$style_elements$Style_Shadow$textGlow = F2(
+	function (color, size) {
+		return _mdgriffith$style_elements$Style_Internal_Model$Shadows(
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+					{
+						kind: 'text',
+						offset: {ctor: '_Tuple2', _0: 0, _1: 0},
+						size: size,
+						blur: size * 2,
+						color: color
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _mdgriffith$style_elements$Style_Shadow$innerGlow = F2(
+	function (color, size) {
+		return _mdgriffith$style_elements$Style_Internal_Model$Shadows(
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+					{
+						kind: 'inset',
+						offset: {ctor: '_Tuple2', _0: 0, _1: 0},
+						size: size,
+						blur: size * 2,
+						color: color
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _mdgriffith$style_elements$Style_Shadow$glow = F2(
+	function (color, size) {
+		return _mdgriffith$style_elements$Style_Internal_Model$Shadows(
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Style_Internal_Model$ShadowModel(
+					{
+						kind: 'box',
+						offset: {ctor: '_Tuple2', _0: 0, _1: 0},
+						size: size,
+						blur: size * 2,
+						color: color
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+
+var _mdgriffith$style_elements$Style_Transition$transitions = function (trans) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Transitions(
+		A2(_elm_lang$core$List$map, _mdgriffith$style_elements$Style_Internal_Model$Transition, trans));
+};
+var _mdgriffith$style_elements$Style_Transition$performant = _mdgriffith$style_elements$Style_Internal_Model$Transitions(
+	{
+		ctor: '::',
+		_0: _mdgriffith$style_elements$Style_Internal_Model$Transition(
+			{
+				delay: 0,
+				duration: 130 * _elm_lang$core$Time$millisecond,
+				easing: 'ease',
+				props: {
+					ctor: '::',
+					_0: 'transform',
+					_1: {
+						ctor: '::',
+						_0: 'filter',
+						_1: {
+							ctor: '::',
+							_0: 'opacity',
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _mdgriffith$style_elements$Style_Transition$all = _mdgriffith$style_elements$Style_Internal_Model$Transitions(
+	{
+		ctor: '::',
+		_0: _mdgriffith$style_elements$Style_Internal_Model$Transition(
+			{
+				delay: 0,
+				duration: 130 * _elm_lang$core$Time$millisecond,
+				easing: 'ease',
+				props: {
+					ctor: '::',
+					_0: 'all',
+					_1: {ctor: '[]'}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _mdgriffith$style_elements$Style_Transition$Transition = F4(
+	function (a, b, c, d) {
+		return {delay: a, duration: b, easing: c, props: d};
+	});
 
 var _moarwick$elm_webpack_starter$Models$initialDevice = {width: 1024, height: 768, phone: false, tablet: false, desktop: true, bigDesktop: false, portrait: false};
 var _moarwick$elm_webpack_starter$Models$initialModel = function (route) {
@@ -19985,8 +20230,10 @@ var _moarwick$elm_webpack_starter$View$aboutPage = A2(
 var _moarwick$elm_webpack_starter$View$mainColors = {
 	indigo: A4(_elm_lang$core$Color$rgba, 63, 81, 181, 1),
 	darkIndigo: A4(_elm_lang$core$Color$rgba, 0, 41, 132, 1),
+	pink: A4(_elm_lang$core$Color$rgba, 233, 30, 99, 1),
 	lightGrey: A4(_elm_lang$core$Color$rgba, 245, 245, 245, 1)
 };
+var _moarwick$elm_webpack_starter$View$ActionButton = {ctor: 'ActionButton'};
 var _moarwick$elm_webpack_starter$View$Subtitle = {ctor: 'Subtitle'};
 var _moarwick$elm_webpack_starter$View$Title = {ctor: 'Title'};
 var _moarwick$elm_webpack_starter$View$Hero = {ctor: 'Hero'};
@@ -20132,7 +20379,51 @@ var _moarwick$elm_webpack_starter$View$stylesheet = _mdgriffith$style_elements$S
 									_mdgriffith$style_elements$Style$style,
 									_moarwick$elm_webpack_starter$View$Subtitle,
 									{ctor: '[]'}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_mdgriffith$style_elements$Style$style,
+										_moarwick$elm_webpack_starter$View$ActionButton,
+										{
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Transition$all,
+											_1: {
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Style_Color$background(_moarwick$elm_webpack_starter$View$mainColors.pink),
+												_1: {
+													ctor: '::',
+													_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
+													_1: {
+														ctor: '::',
+														_0: A2(_mdgriffith$style_elements$Style_Shadow$glow, _elm_lang$core$Color$charcoal, 2),
+														_1: {
+															ctor: '::',
+															_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+															_1: {
+																ctor: '::',
+																_0: _mdgriffith$style_elements$Style$paddingHint(16),
+																_1: {
+																	ctor: '::',
+																	_0: _mdgriffith$style_elements$Style$hover(
+																		{
+																			ctor: '::',
+																			_0: _mdgriffith$style_elements$Style$cursor('pointer'),
+																			_1: {
+																				ctor: '::',
+																				_0: _mdgriffith$style_elements$Style_Shadow$simple,
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -20210,20 +20501,34 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 								_moarwick$elm_webpack_starter$View$None,
 								{
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Element_Attributes$center,
-									_1: {ctor: '[]'}
+									_0: _mdgriffith$style_elements$Element_Attributes$verticalCenter,
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Element_Attributes$center,
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Element_Attributes$height(
+												_mdgriffith$style_elements$Element_Attributes$px(
+													_elm_lang$core$Basics$toFloat(model.device.height) * 0.4)),
+											_1: {ctor: '[]'}
+										}
+									}
 								},
 								{
 									ctor: '::',
-									_0: A3(
-										_mdgriffith$style_elements$Element$el,
-										_moarwick$elm_webpack_starter$View$None,
-										{
-											ctor: '::',
-											_0: _mdgriffith$style_elements$Element_Attributes$padding(16),
-											_1: {ctor: '[]'}
-										},
-										_mdgriffith$style_elements$Element$text('Add your contents here')),
+									_0: A2(
+										_mdgriffith$style_elements$Element$link,
+										'https://github.com/happysalada/elm-starter',
+										A3(
+											_mdgriffith$style_elements$Element$el,
+											_moarwick$elm_webpack_starter$View$ActionButton,
+											{
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Element_Attributes$target('_blank'),
+												_1: {ctor: '[]'}
+											},
+											_mdgriffith$style_elements$Element$text(
+												_elm_lang$core$String$toUpper('Look at the code')))),
 									_1: {ctor: '[]'}
 								})),
 						_1: {ctor: '[]'}

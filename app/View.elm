@@ -1,13 +1,16 @@
 module View exposing (view)
 
-import Html exposing (Html, button, div, h1, span, text)
+import Html exposing (Html, div, h1)
 import Html.Attributes exposing (class, style, id, attribute)
 import Models exposing (Model, Message(..))
 import Color
-import Element exposing (root, text, html, column, nav, row, el, header, section, Element)
-import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY)
+import Element exposing (root, text, html, column, nav, row, el, header, section, Element, button, link)
+import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY, target)
 import Style exposing (style, StyleSheet, paddingHint, hover)
 import Style.Color as Color
+import Style.Shadow as Shadow
+import Style.Border as Border
+import Style.Transition as Transition exposing (all)
 import Style.Font as Font exposing (typeface, lineHeight, size)
 
 
@@ -19,11 +22,13 @@ type Styles
     | Hero
     | Title
     | Subtitle
+    | ActionButton
 
 
 mainColors =
     { indigo = Color.rgba 63 81 181 1
     , darkIndigo = Color.rgba 0 41 132 1
+    , pink = Color.rgba 233 30 99 1
     , lightGrey = Color.rgba 245 245 245 1
     }
 
@@ -58,6 +63,18 @@ stylesheet =
             ]
         , Style.style Subtitle
             []
+        , Style.style ActionButton
+            [ Transition.all
+            , Color.background mainColors.pink
+            , Color.text Color.white
+            , Shadow.glow Color.charcoal 2
+            , Border.rounded 2
+            , paddingHint 16
+            , hover
+                [ Style.cursor "pointer"
+                , Shadow.simple
+                ]
+            ]
         ]
 
 
@@ -82,19 +99,18 @@ mainPage model =
             [ nav <|
                 row Nav
                     []
-                    [ el Logo [] (Element.text "Elm Starter") ]
+                    [ el Logo [] (text "Elm Starter") ]
             , header <|
                 column Hero
                     [ verticalCenter, height (px (toFloat model.device.height * 0.4)), spacingXY 0 16 ]
-                    [ el Title [] (Element.text "Quick start with Elm")
-                    , el Subtitle [] (Element.text "service workers, google analytics, style elements, firebase functions, and more!")
+                    [ el Title [] (text "Quick start with Elm")
+                    , el Subtitle [] (text "service workers, google analytics, style elements, firebase functions, and more!")
                     ]
             , section <|
                 column None
-                    [ center ]
-                    [ el None
-                        [ padding 16 ]
-                        (Element.text "Add your contents here")
+                    [ verticalCenter, center, height (px (toFloat model.device.height * 0.4)) ]
+                    [ link "https://github.com/happysalada/elm-starter" <|
+                        el ActionButton [ target "_blank" ] (text (String.toUpper "Look at the code"))
                     ]
             ]
 
