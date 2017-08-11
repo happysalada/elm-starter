@@ -19842,13 +19842,22 @@ var _mdgriffith$style_elements$Style_Font$typeface = function (families) {
 		_mdgriffith$style_elements$Style_Internal_Render_Value$typeface(families));
 };
 
+var _moarwick$elm_webpack_starter$Models$initialDevice = {width: 1024, height: 768, phone: false, tablet: false, desktop: true, bigDesktop: false, portrait: false};
 var _moarwick$elm_webpack_starter$Models$initialModel = function (route) {
-	return {route: route};
+	return {route: route, device: _moarwick$elm_webpack_starter$Models$initialDevice};
 };
-var _moarwick$elm_webpack_starter$Models$Model = function (a) {
-	return {route: a};
-};
+var _moarwick$elm_webpack_starter$Models$Model = F2(
+	function (a, b) {
+		return {route: a, device: b};
+	});
+var _moarwick$elm_webpack_starter$Models$Device = F7(
+	function (a, b, c, d, e, f, g) {
+		return {width: a, height: b, phone: c, tablet: d, desktop: e, bigDesktop: f, portrait: g};
+	});
 var _moarwick$elm_webpack_starter$Models$NoOp = {ctor: 'NoOp'};
+var _moarwick$elm_webpack_starter$Models$Resize = function (a) {
+	return {ctor: 'Resize', _0: a};
+};
 var _moarwick$elm_webpack_starter$Models$GoToMainPage = {ctor: 'GoToMainPage'};
 var _moarwick$elm_webpack_starter$Models$GoToAboutPage = {ctor: 'GoToAboutPage'};
 var _moarwick$elm_webpack_starter$Models$OnLocationChange = function (a) {
@@ -19883,6 +19892,15 @@ var _moarwick$elm_webpack_starter$Update$update = F2(
 	function (msg, model) {
 		var _p1 = msg;
 		switch (_p1.ctor) {
+			case 'Resize':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							device: _mdgriffith$style_elements$Element$classifyDevice(_p1._0)
+						}),
+					{ctor: '[]'});
 			case 'OnLocationChange':
 				var newRoute = _moarwick$elm_webpack_starter$Update$parseLocation(_p1._0);
 				return A2(
@@ -20090,7 +20108,11 @@ var _moarwick$elm_webpack_starter$View$stylesheet = _mdgriffith$style_elements$S
 									_1: {
 										ctor: '::',
 										_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Font$center,
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}),
@@ -20101,7 +20123,7 @@ var _moarwick$elm_webpack_starter$View$stylesheet = _mdgriffith$style_elements$S
 								_moarwick$elm_webpack_starter$View$Title,
 								{
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Style_Font$size(40),
+									_0: _mdgriffith$style_elements$Style_Font$size(42),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -20139,7 +20161,7 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 								_mdgriffith$style_elements$Element$el,
 								_moarwick$elm_webpack_starter$View$Logo,
 								{ctor: '[]'},
-								_mdgriffith$style_elements$Element$text('Git Back')),
+								_mdgriffith$style_elements$Element$text('Elm Starter')),
 							_1: {ctor: '[]'}
 						})),
 				_1: {
@@ -20153,16 +20175,13 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 								_0: _mdgriffith$style_elements$Element_Attributes$verticalCenter,
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Element_Attributes$center,
+									_0: _mdgriffith$style_elements$Element_Attributes$height(
+										_mdgriffith$style_elements$Element_Attributes$px(
+											_elm_lang$core$Basics$toFloat(model.device.height) * 0.4)),
 									_1: {
 										ctor: '::',
-										_0: _mdgriffith$style_elements$Element_Attributes$height(
-											_mdgriffith$style_elements$Element_Attributes$px(200)),
-										_1: {
-											ctor: '::',
-											_0: A2(_mdgriffith$style_elements$Element_Attributes$spacingXY, 0, 16),
-											_1: {ctor: '[]'}
-										}
+										_0: A2(_mdgriffith$style_elements$Element_Attributes$spacingXY, 0, 16),
+										_1: {ctor: '[]'}
 									}
 								}
 							},
@@ -20172,14 +20191,14 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 									_mdgriffith$style_elements$Element$el,
 									_moarwick$elm_webpack_starter$View$Title,
 									{ctor: '[]'},
-									_mdgriffith$style_elements$Element$text('Contribute to open source')),
+									_mdgriffith$style_elements$Element$text('Quick start with Elm')),
 								_1: {
 									ctor: '::',
 									_0: A3(
 										_mdgriffith$style_elements$Element$el,
 										_moarwick$elm_webpack_starter$View$Subtitle,
 										{ctor: '[]'},
-										_mdgriffith$style_elements$Element$text('Help out on unassigned open issues')),
+										_mdgriffith$style_elements$Element$text('service workers, google analytics, style elements, firebase functions, and more!')),
 									_1: {ctor: '[]'}
 								}
 							})),
@@ -20204,7 +20223,7 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 											_0: _mdgriffith$style_elements$Element_Attributes$padding(16),
 											_1: {ctor: '[]'}
 										},
-										_mdgriffith$style_elements$Element$text('Starter')),
+										_mdgriffith$style_elements$Element$text('Add your contents here')),
 									_1: {ctor: '[]'}
 								})),
 						_1: {ctor: '[]'}
@@ -20225,7 +20244,10 @@ var _moarwick$elm_webpack_starter$View$view = function (model) {
 };
 
 var _moarwick$elm_webpack_starter$App$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
+	return _elm_lang$window$Window$resizes(
+		function (size) {
+			return _moarwick$elm_webpack_starter$Models$Resize(size);
+		});
 };
 var _moarwick$elm_webpack_starter$App$init = function (location) {
 	var currentRoute = _moarwick$elm_webpack_starter$Update$parseLocation(location);
@@ -20233,7 +20255,11 @@ var _moarwick$elm_webpack_starter$App$init = function (location) {
 	return A2(
 		_elm_lang$core$Platform_Cmd_ops['!'],
 		initModel,
-		{ctor: '[]'});
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Task$perform, _moarwick$elm_webpack_starter$Models$Resize, _elm_lang$window$Window$size),
+			_1: {ctor: '[]'}
+		});
 };
 var _moarwick$elm_webpack_starter$App$main = A2(
 	_elm_lang$navigation$Navigation$program,

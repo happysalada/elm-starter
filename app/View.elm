@@ -51,6 +51,7 @@ stylesheet =
             [ Font.typeface [ "helvetica", "arial", "sans-serif" ]
             , Color.background mainColors.indigo
             , Color.text Color.white
+            , Font.center
             ]
         , Style.style Title
             [ Font.size 42
@@ -84,7 +85,7 @@ mainPage model =
                     [ el Logo [] (Element.text "Elm Starter") ]
             , header <|
                 column Hero
-                    [ verticalCenter, center, height (px 200), spacingXY 0 16 ]
+                    [ verticalCenter, height (px (toFloat model.device.height * 0.4)), spacingXY 0 16 ]
                     [ el Title [] (Element.text "Quick start with Elm")
                     , el Subtitle [] (Element.text "service workers, google analytics, style elements, firebase functions, and more!")
                     ]
@@ -93,7 +94,7 @@ mainPage model =
                     [ center ]
                     [ el None
                         [ padding 16 ]
-                        (Element.text "Starter")
+                        (Element.text "Add your contents here")
                     ]
             ]
 

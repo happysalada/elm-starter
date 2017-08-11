@@ -21,8 +21,8 @@ initialModel route =
 
 initialDevice : Device
 initialDevice =
-    { width = 1200
-    , height = 800
+    { width = 1024
+    , height = 768
     , phone = False
     , tablet = False
     , desktop = True

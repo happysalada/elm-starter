@@ -1,10 +1,11 @@
 module App exposing (main)
 
 import Navigation exposing (Location)
-import Models exposing (..)
+import Models exposing (initialModel, Model, Message(..))
 import Update exposing (update)
 import View exposing (view)
 import Window exposing (resizes)
+import Task
 
 
 init : Location -> ( Model, Cmd Message )
@@ -16,7 +17,7 @@ init location =
         initModel =
             initialModel currentRoute
     in
-        initModel ! []
+        initModel ! [ Task.perform Resize Window.size ]
 
 
 
