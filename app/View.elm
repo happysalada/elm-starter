@@ -104,7 +104,7 @@ mainPage model =
                 column Hero
                     [ verticalCenter, height (px (toFloat model.device.height * 0.4)), spacingXY 0 16 ]
                     [ el Title [] (text "Quick start with Elm")
-                    , el Subtitle [] (text "service workers, google analytics, style elements, firebase functions, and more!")
+                    , el Subtitle [] (text "service workers, google analytics, style elements, and more!")
                     ]
             , section <|
                 column None

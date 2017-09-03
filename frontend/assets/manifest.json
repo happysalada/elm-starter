@@ -1,6 +1,6 @@
 {
-  "short_name": "GitBack",
-  "name": "GitBack Contribute to OSS",
+  "short_name": "ElmStarter",
+  "name": "ElmStarter a quickstarter for Elm",
   "icons": [
     {
       "src": "/assets/res/mipmap-mdpi/ic_launcher.png",
