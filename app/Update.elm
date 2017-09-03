@@ -1,9 +1,15 @@
 module Update exposing (..)
 
-import Models exposing (Model, Message(..), Route(..))
-import UrlParser exposing (..)
+import Http
+import Task
+import Models exposing (Model, Message(..), Route(..), OcrStatus(..))
+import UrlParser exposing (parseHash, Parser, oneOf, map, top, s)
 import Navigation exposing (Location)
 import Element exposing (classifyDevice)
+import RemoteData
+import Json.Decode exposing (Decoder, int, string, list)
+import Json.Decode.Pipeline exposing (decode, required, optional)
+import FileReader exposing (NativeFile, readAsDataUrl)
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -11,6 +17,31 @@ update msg model =
     case msg of
         Resize windowSize ->
             { model | device = classifyDevice windowSize } ! []
+
+        DragEnter ->
+            { model | dragAndDrop = model.dragAndDrop + 1, ocrStatus = UploadFileAction } ! []
+
+        DragLeave ->
+            { model | dragAndDrop = model.dragAndDrop - 1 } ! []
+
+        Drop nativeFiles ->
+            { model | dragAndDrop = 0, nativeFiles = nativeFiles, ocrStatus = FileUploaded } ! []
+
+        FileData (Ok val) ->
+            let
+                imageBase64String =
+                    toString val
+            in
+                { model | ocrStatus = SendingFile, imageData = imageBase64String } ! [ sendFiletoCloudVision imageBase64String ]
+
+        FileData (Err err) ->
+            { model | ocrError = Just (toString err) } ! []
+
+        ParseImageFile ->
+            { model | ocrStatus = ParsingFile } ! [ parseFileToBase64 model.nativeFiles ]
+
+        ReceiveOcrResults ocrResults ->
+            { model | ocrStatus = ResponseReceived } ! []
 
         OnLocationChange location ->
             let
@@ -45,3 +76,79 @@ matchers =
         [ map MainPage top
         , map AboutPage (s "about")
         ]
+
+
+parseFileToBase64 : List NativeFile -> Cmd Message
+parseFileToBase64 nativeFiles =
+    case nativeFiles of
+        nativefile :: _ ->
+            .blob nativefile
+                |> readAsDataUrl
+                |> Task.map Ok
+                |> Task.onError (Task.succeed << Err)
+                |> Task.perform FileData
+
+        [] ->
+            Cmd.none
+
+
+sendFiletoCloudVision : String -> Cmd Message
+sendFiletoCloudVision imagebase64String =
+    let
+        request =
+            Http.request
+                { method = "POST"
+                , headers = []
+                , url = "https://vision.googleapis.com/v1/images:annotate?key="
+                , body = Http.stringBody "application/json" (ocrRequestBody imagebase64String)
+                , expect = Http.expectJson ocrResponseDecoder
+                , timeout = Nothing
+                , withCredentials = False
+                }
+    in
+        request
+            |> RemoteData.sendRequest
+            |> Cmd.map ReceiveOcrResults
+
+
+ocrResponseDecoder : Decoder (List (List String))
+ocrResponseDecoder =
+    decode identity
+        |> required "response" (list ocrTextAnnotationDecoder)
+
+
+ocrTextAnnotationDecoder : Decoder (List String)
+ocrTextAnnotationDecoder =
+    decode identity
+        |> required "textAnnotations" (list ocrDescriptionDecoder)
+
+
+ocrDescriptionDecoder : Decoder String
+ocrDescriptionDecoder =
+    decode identity
+        |> required "description" string
+
+
+ocrRequestBody : String -> String
+ocrRequestBody imagebase64String =
+    """{"requests": [{"image": {"content":\""""
+        ++ imagebase64String
+        ++ """"},"features": [{"type": "TEXT_DETECTION"}]}]}"""
+
+
+
+-- issueSearchResultDecoder : Decoder (List Issue)
+-- issueSearchResultDecoder =
+--     decode identity
+--         |> required "items" (list issueDecoder)
+-- issueDecoder : Decoder Issue
+-- issueDecoder =
+--     decode Issue
+--         |> required "title" string
+--         |> optional "body" string "No Body"
+--         |> required "comments" int
+--         |> required "repository_url" string
+--         |> required "labels" (list labelDecoder)
+--         |> required "id" int
+--         |> required "created_at" string
+--         |> required "updated_at" string
