@@ -31,6 +31,11 @@ update msg model =
             let
                 imageBase64String =
                     toString val
+                        |> String.split "base64,"
+                        |> List.reverse
+                        |> List.head
+                        |> Maybe.withDefault ""
+                        |> (++) "\""
             in
                 { model | ocrStatus = SendingFile, imageData = imageBase64String } ! [ sendFiletoCloudVision imageBase64String ]
 
@@ -41,7 +46,7 @@ update msg model =
             { model | ocrStatus = ParsingFile } ! [ parseFileToBase64 model.nativeFiles ]
 
         ReceiveOcrResults ocrResults ->
-            { model | ocrStatus = ResponseReceived } ! []
+            { model | ocrStatus = ResponseReceived, ocrResponse = ocrResults } ! []
 
         OnLocationChange location ->
             let
@@ -99,7 +104,7 @@ sendFiletoCloudVision imagebase64String =
             Http.request
                 { method = "POST"
                 , headers = []
-                , url = "https://vision.googleapis.com/v1/images:annotate?key="
+                , url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyB1edq04MbFWy3loHw4_1BJUHnAYZd7sSg"
                 , body = Http.stringBody "application/json" (ocrRequestBody imagebase64String)
                 , expect = Http.expectJson ocrResponseDecoder
                 , timeout = Nothing
@@ -114,7 +119,7 @@ sendFiletoCloudVision imagebase64String =
 ocrResponseDecoder : Decoder (List (List String))
 ocrResponseDecoder =
     decode identity
-        |> required "response" (list ocrTextAnnotationDecoder)
+        |> required "responses" (list ocrTextAnnotationDecoder)
 
 
 ocrTextAnnotationDecoder : Decoder (List String)
@@ -131,24 +136,6 @@ ocrDescriptionDecoder =
 
 ocrRequestBody : String -> String
 ocrRequestBody imagebase64String =
-    """{"requests": [{"image": {"content":\""""
+    """{"requests": [{"image": {"content":"""
         ++ imagebase64String
-        ++ """"},"features": [{"type": "TEXT_DETECTION"}]}]}"""
-
-
-
--- issueSearchResultDecoder : Decoder (List Issue)
--- issueSearchResultDecoder =
---     decode identity
---         |> required "items" (list issueDecoder)
--- issueDecoder : Decoder Issue
--- issueDecoder =
---     decode Issue
---         |> required "title" string
---         |> optional "body" string "No Body"
---         |> required "comments" int
---         |> required "repository_url" string
---         |> required "labels" (list labelDecoder)
---         |> required "id" int
---         |> required "created_at" string
---         |> required "updated_at" string
+        ++ """},"features": [{"type": "TEXT_DETECTION"}]}]}"""
