@@ -1,6 +1,6 @@
 {
-  "short_name": "GitBack",
-  "name": "GitBack Contribute to OSS",
+  "short_name": "簡単にOCR",
+  "name": "画像に簡単にOCRを行う",
   "icons": [
     {
       "src": "/assets/res/mipmap-mdpi/ic_launcher.png",
