@@ -104,12 +104,12 @@ mainPage model =
             [ nav <|
                 row Nav
                     []
-                    [ el Logo [] (text "Elm Starter") ]
+                    [ el Logo [] (text "簡単にOCR") ]
             , header <|
                 column Hero
                     [ center, verticalCenter, height (px (toFloat model.device.height * 0.4)), spacingXY 0 16 ]
-                    [ el Title [] (text "Quick start with Elm")
-                    , el Subtitle [] (text "service workers, google analytics, style elements, firebase functions, and more!")
+                    [ el Title [] (text "簡単に画像にOCRをする")
+                    , el Subtitle [] (text "以下に画像をアップロードしてまたはドラッグ&ドロップしてから自動的にOCRしてくれます")
                     ]
             , section <|
                 column None
@@ -122,7 +122,7 @@ mainPage model =
                     )
                     (case model.ocrStatus of
                         NoFileUploaded ->
-                            [ text "upload a file with the button or drag and drop it"
+                            [ text "画像をアップロードしてまたはドラッグ&ドロップ"
                             , html
                                 (Html.input
                                     [ type_ "file"
@@ -134,24 +134,23 @@ mainPage model =
                             ]
 
                         UploadFileAction ->
-                            [ text "drop it here" ]
+                            [ text "ここにドロップ" ]
 
                         FileUploaded ->
                             [ el ActionButton
                                 [ onClick ParseImageFile ]
                                 (model.nativeFiles
                                     |> List.map .name
-                                    |> List.foldr (++) ""
-                                    |> (++) "Perform OCR on "
+                                    |> List.foldr (++) "にOCRを行う"
                                     |> text
                                 )
                             ]
 
                         ParsingFile ->
-                            [ text "parsing file" ]
+                            [ text "画像処理中" ]
 
                         SendingFile ->
-                            [ text "sending file" ]
+                            [ text "処理されたデータにOCRを行い中" ]
 
                         ResponseReceived ->
                             showResponse model
@@ -168,25 +167,27 @@ dragAndDropEventHandlers =
     ]
 
 
-showResponse : Model -> List (Element style variation msg)
+showResponse : Model -> List (Element Styles variation msg)
 showResponse model =
     case model.ocrResponse of
         RemoteData.NotAsked ->
-            [ text "problem performing the request" ]
+            [ text "画像処理に問題が発生しました" ]
 
         RemoteData.Loading ->
-            [ text "loading..." ]
+            [ text "ローディング" ]
 
         RemoteData.Success response ->
             case response of
                 (textAnnotation :: _) :: _ ->
-                    [ text ("received" ++ textAnnotation) ]
+                    [ el None [] (text "いただいたデータは")
+                    , el None [] (text textAnnotation)
+                    ]
 
                 _ ->
-                    [ text ("problem parsing the response" ++ toString response) ]
+                    [ text ("画像処理に問題が発生しました" ++ toString response) ]
 
         RemoteData.Failure error ->
-            [ text ("received the error" ++ toString error) ]
+            [ text ("この問題が発生しました" ++ toString error) ]
 
 
 aboutPage : Html msg
