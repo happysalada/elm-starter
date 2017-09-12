@@ -6123,6 +6123,137 @@ var _danyx23$elm_mimetype$MimeType$parseMimeType = function (mimeString) {
 	}
 };
 
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
+
 var _elm_lang$core$Color$fmod = F2(
 	function (f, n) {
 		var integer = _elm_lang$core$Basics$floor(f);
@@ -10787,21 +10918,14 @@ var _krisajenkins$remotedata$RemoteData$mapError = F2(
 				return _krisajenkins$remotedata$RemoteData$NotAsked;
 		}
 	});
-var _krisajenkins$remotedata$RemoteData$mapBoth = F3(
-	function (successFn, errorFn, data) {
-		var _p12 = data;
-		switch (_p12.ctor) {
-			case 'Success':
-				return _krisajenkins$remotedata$RemoteData$Success(
-					successFn(_p12._0));
-			case 'Failure':
-				return _krisajenkins$remotedata$RemoteData$Failure(
-					errorFn(_p12._0));
-			case 'Loading':
-				return _krisajenkins$remotedata$RemoteData$Loading;
-			default:
-				return _krisajenkins$remotedata$RemoteData$NotAsked;
-		}
+var _krisajenkins$remotedata$RemoteData$mapBoth = F2(
+	function (successFn, errorFn) {
+		return function (_p12) {
+			return A2(
+				_krisajenkins$remotedata$RemoteData$mapError,
+				errorFn,
+				A2(_krisajenkins$remotedata$RemoteData$map, successFn, _p12));
+		};
 	});
 var _krisajenkins$remotedata$RemoteData$andThen = F2(
 	function (f, data) {
@@ -21004,9 +21128,23 @@ var _simonh1000$file_reader$FileReader$ReadFail = {ctor: 'ReadFail'};
 var _simonh1000$file_reader$FileReader$NoValidBlob = {ctor: 'NoValidBlob'};
 
 var _moarwick$elm_webpack_starter$Models$initialDevice = {width: 1024, height: 768, phone: false, tablet: false, desktop: true, bigDesktop: false, portrait: false};
+var _moarwick$elm_webpack_starter$Models$centerOfPolygon = function (ocrPolygon) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		{x: 0.0, y: 0.0},
+		_elm_lang$core$List$head(ocrPolygon.boundingPoly));
+};
 var _moarwick$elm_webpack_starter$Models$Model = F8(
 	function (a, b, c, d, e, f, g, h) {
 		return {route: a, device: b, ocrStatus: c, dragAndDrop: d, nativeFiles: e, imageData: f, ocrError: g, ocrResponse: h};
+	});
+var _moarwick$elm_webpack_starter$Models$OcrPolygon = F2(
+	function (a, b) {
+		return {description: a, boundingPoly: b};
+	});
+var _moarwick$elm_webpack_starter$Models$Point = F2(
+	function (a, b) {
+		return {x: a, y: b};
 	});
 var _moarwick$elm_webpack_starter$Models$Device = F7(
 	function (a, b, c, d, e, f, g) {
@@ -21061,11 +21199,29 @@ var _moarwick$elm_webpack_starter$Update$ocrRequestBody = function (imagebase64S
 		'{\"requests\": [{\"image\": {\"content\":',
 		A2(_elm_lang$core$Basics_ops['++'], imagebase64String, '},\"features\": [{\"type\": \"TEXT_DETECTION\"}]}]}'));
 };
+var _moarwick$elm_webpack_starter$Update$pointsDecoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'y',
+	_elm_lang$core$Json_Decode$float,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'x',
+		_elm_lang$core$Json_Decode$float,
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_moarwick$elm_webpack_starter$Models$Point)));
+var _moarwick$elm_webpack_starter$Update$boundingPolyDecoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'vertices',
+	_elm_lang$core$Json_Decode$list(_moarwick$elm_webpack_starter$Update$pointsDecoder),
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_elm_lang$core$Basics$identity));
 var _moarwick$elm_webpack_starter$Update$ocrDescriptionDecoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-	'description',
-	_elm_lang$core$Json_Decode$string,
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_elm_lang$core$Basics$identity));
+	'boundingPoly',
+	_moarwick$elm_webpack_starter$Update$boundingPolyDecoder,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'description',
+		_elm_lang$core$Json_Decode$string,
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_moarwick$elm_webpack_starter$Models$OcrPolygon)));
 var _moarwick$elm_webpack_starter$Update$ocrTextAnnotationDecoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'textAnnotations',
@@ -21563,9 +21719,55 @@ var _moarwick$elm_webpack_starter$View$showResponse = function (model) {
 				_1: {ctor: '[]'}
 			};
 		case 'Success':
-			var _p2 = _p0._0;
-			var _p1 = _p2;
+			var _p3 = _p0._0;
+			var _p1 = _p3;
 			if ((_p1.ctor === '::') && (_p1._0.ctor === '::')) {
+				var _p2 = _p1._0._1;
+				var roundingFactor = 30;
+				var rowYCoords = _elm_lang$core$Set$toList(
+					_elm_lang$core$Set$fromList(
+						A2(
+							_elm_lang$core$List$map,
+							function (value) {
+								return _elm_lang$core$Basics$round(value / roundingFactor);
+							},
+							A2(
+								_elm_lang$core$List$map,
+								function (_) {
+									return _.y;
+								},
+								A2(_elm_lang$core$List$map, _moarwick$elm_webpack_starter$Models$centerOfPolygon, _p2)))));
+				var rowFromCoord = function (rowYCoord) {
+					return A3(
+						_mdgriffith$style_elements$Element$row,
+						_moarwick$elm_webpack_starter$View$None,
+						{
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$spacing(10),
+							_1: {ctor: '[]'}
+						},
+						A2(
+							_elm_lang$core$List$map,
+							function (ocrPolygon) {
+								return A3(
+									_mdgriffith$style_elements$Element$el,
+									_moarwick$elm_webpack_starter$View$None,
+									{ctor: '[]'},
+									_mdgriffith$style_elements$Element$text(ocrPolygon.description));
+							},
+							A2(
+								_elm_lang$core$List$filter,
+								function (ocrPolygon) {
+									return _elm_lang$core$Native_Utils.eq(
+										_elm_lang$core$Basics$round(
+											function (_) {
+												return _.y;
+											}(
+												_moarwick$elm_webpack_starter$Models$centerOfPolygon(ocrPolygon)) / roundingFactor),
+										rowYCoord);
+								},
+								_p2)));
+				};
 				return {
 					ctor: '::',
 					_0: A3(
@@ -21573,15 +21775,7 @@ var _moarwick$elm_webpack_starter$View$showResponse = function (model) {
 						_moarwick$elm_webpack_starter$View$None,
 						{ctor: '[]'},
 						_mdgriffith$style_elements$Element$text('いただいたデータは')),
-					_1: {
-						ctor: '::',
-						_0: A3(
-							_mdgriffith$style_elements$Element$el,
-							_moarwick$elm_webpack_starter$View$None,
-							{ctor: '[]'},
-							_mdgriffith$style_elements$Element$text(_p1._0._0)),
-						_1: {ctor: '[]'}
-					}
+					_1: A2(_elm_lang$core$List$map, rowFromCoord, rowYCoords)
 				};
 			} else {
 				return {
@@ -21590,7 +21784,11 @@ var _moarwick$elm_webpack_starter$View$showResponse = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							'画像処理に問題が発生しました',
-							_elm_lang$core$Basics$toString(_p2))),
+							A3(
+								_elm_lang$core$String$slice,
+								0,
+								200,
+								_elm_lang$core$Basics$toString(_p3)))),
 					_1: {ctor: '[]'}
 				};
 			}
@@ -21601,7 +21799,11 @@ var _moarwick$elm_webpack_starter$View$showResponse = function (model) {
 					A2(
 						_elm_lang$core$Basics_ops['++'],
 						'この問題が発生しました',
-						_elm_lang$core$Basics$toString(_p0._0))),
+						A3(
+							_elm_lang$core$String$slice,
+							0,
+							200,
+							_elm_lang$core$Basics$toString(_p0._0)))),
 				_1: {ctor: '[]'}
 			};
 	}
@@ -21697,8 +21899,8 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 									},
 									_moarwick$elm_webpack_starter$View$dragAndDropEventHandlers),
 								function () {
-									var _p3 = model.ocrStatus;
-									switch (_p3.ctor) {
+									var _p4 = model.ocrStatus;
+									switch (_p4.ctor) {
 										case 'NoFileUploaded':
 											return {
 												ctor: '::',
@@ -21783,8 +21985,8 @@ var _moarwick$elm_webpack_starter$View$mainPage = function (model) {
 			}));
 };
 var _moarwick$elm_webpack_starter$View$view = function (model) {
-	var _p4 = model.route;
-	switch (_p4.ctor) {
+	var _p5 = model.route;
+	switch (_p5.ctor) {
 		case 'MainPage':
 			return _moarwick$elm_webpack_starter$View$mainPage(model);
 		case 'AboutPage':

@@ -3,10 +3,11 @@ module View exposing (view)
 import Html exposing (Html, div, h1)
 import Html.Attributes exposing (class, style, id, attribute, type_, multiple)
 import Html.Events exposing (on)
-import Models exposing (Model, Message(..), OcrStatus(..))
+import Models exposing (Model, Message(..), OcrStatus(..), centerOfPolygon)
 import Color
+import Set
 import Element exposing (root, text, html, column, nav, row, el, header, section, Element, button, link)
-import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY, target)
+import Element.Attributes exposing (verticalCenter, height, width, fill, px, spacing, center, justify, padding, paddingXY, percent, clip, maxHeight, maxWidth, inlineStyle, spacingXY, target, moveXY)
 import Element.Events exposing (onWithOptions, onClick)
 import Style exposing (style, StyleSheet, paddingHint, hover)
 import Style.Color as Color
@@ -178,16 +179,38 @@ showResponse model =
 
         RemoteData.Success response ->
             case response of
-                (textAnnotation :: _) :: _ ->
-                    [ el None [] (text "いただいたデータは")
-                    , el None [] (text textAnnotation)
-                    ]
+                (_ :: ocrPolygons) :: _ ->
+                    let
+                        roundingFactor =
+                            30
+
+                        rowYCoords =
+                            ocrPolygons
+                                |> List.map centerOfPolygon
+                                |> List.map .y
+                                |> List.map (\value -> round (value / roundingFactor))
+                                |> Set.fromList
+                                |> Set.toList
+
+                        rowFromCoord rowYCoord =
+                            row None
+                                [ spacing 10 ]
+                                (ocrPolygons
+                                    |> List.filter (\ocrPolygon -> round ((.y (centerOfPolygon ocrPolygon)) / roundingFactor) == rowYCoord)
+                                    |> List.map (\ocrPolygon -> el None [] (text ocrPolygon.description))
+                                )
+                    in
+                        ((el None [] (text "いただいたデータは"))
+                            :: (rowYCoords
+                                    |> List.map rowFromCoord
+                               )
+                        )
 
                 _ ->
-                    [ text ("画像処理に問題が発生しました" ++ toString response) ]
+                    [ text ("画像処理に問題が発生しました" ++ (String.slice 0 200 (toString response))) ]
 
         RemoteData.Failure error ->
-            [ text ("この問題が発生しました" ++ toString error) ]
+            [ text ("この問題が発生しました" ++ (String.slice 0 200 (toString error))) ]
 
 
 aboutPage : Html msg

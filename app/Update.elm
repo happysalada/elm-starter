@@ -2,12 +2,12 @@ module Update exposing (..)
 
 import Http
 import Task
-import Models exposing (Model, Message(..), Route(..), OcrStatus(..))
+import Models exposing (Model, Message(..), Route(..), OcrStatus(..), OcrPolygon, Point)
 import UrlParser exposing (parseHash, Parser, oneOf, map, top, s)
 import Navigation exposing (Location)
 import Element exposing (classifyDevice)
 import RemoteData
-import Json.Decode exposing (Decoder, int, string, list)
+import Json.Decode exposing (Decoder, int, string, list, float)
 import Json.Decode.Pipeline exposing (decode, required, optional)
 import FileReader exposing (NativeFile, readAsDataUrl)
 
@@ -116,22 +116,36 @@ sendFiletoCloudVision imagebase64String =
             |> Cmd.map ReceiveOcrResults
 
 
-ocrResponseDecoder : Decoder (List (List String))
+ocrResponseDecoder : Decoder (List (List OcrPolygon))
 ocrResponseDecoder =
     decode identity
         |> required "responses" (list ocrTextAnnotationDecoder)
 
 
-ocrTextAnnotationDecoder : Decoder (List String)
+ocrTextAnnotationDecoder : Decoder (List OcrPolygon)
 ocrTextAnnotationDecoder =
     decode identity
         |> required "textAnnotations" (list ocrDescriptionDecoder)
 
 
-ocrDescriptionDecoder : Decoder String
+ocrDescriptionDecoder : Decoder OcrPolygon
 ocrDescriptionDecoder =
-    decode identity
+    decode OcrPolygon
         |> required "description" string
+        |> required "boundingPoly" boundingPolyDecoder
+
+
+boundingPolyDecoder : Decoder (List Point)
+boundingPolyDecoder =
+    decode identity
+        |> required "vertices" (list pointsDecoder)
+
+
+pointsDecoder : Decoder Point
+pointsDecoder =
+    decode Point
+        |> required "x" float
+        |> required "y" float
 
 
 ocrRequestBody : String -> String

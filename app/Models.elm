@@ -14,7 +14,7 @@ type alias Model =
     , nativeFiles : List NativeFile
     , imageData : String
     , ocrError : Maybe String
-    , ocrResponse : RemoteData.WebData (List (List String))
+    , ocrResponse : RemoteData.WebData (List (List OcrPolygon))
     }
 
 
@@ -31,6 +31,24 @@ type OcrStatus
     | ParsingFile
     | SendingFile
     | ResponseReceived
+
+
+type alias OcrPolygon =
+    { description : String
+    , boundingPoly : List Point
+    }
+
+
+type alias Point =
+    { x : Float
+    , y : Float
+    }
+
+
+centerOfPolygon : OcrPolygon -> Point
+centerOfPolygon ocrPolygon =
+    List.head ocrPolygon.boundingPoly
+        |> Maybe.withDefault { x = 0.0, y = 0.0 }
 
 
 type alias Device =
@@ -54,7 +72,7 @@ type Message
     | Drop (List NativeFile)
     | ParseImageFile
     | FileData (Result Error FileContentDataUrl)
-    | ReceiveOcrResults (RemoteData.WebData (List (List String)))
+    | ReceiveOcrResults (RemoteData.WebData (List (List OcrPolygon)))
     | NoOp
 
 
